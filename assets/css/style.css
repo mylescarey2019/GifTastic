@@ -12,6 +12,7 @@ CSS - Periodic Table Trivia Game
   overflow-x: scroll;
 }
 
+
 .container { 
   width: 80%;
   height: auto;
@@ -20,7 +21,7 @@ CSS - Periodic Table Trivia Game
   margin-left: auto;
   margin-right: auto;
   /* opacity: 50%; */
-  background-color: white;
+  /* background-color: white; */
 }
 
 
@@ -37,10 +38,22 @@ body {
   padding-top: 56px;
 }
 
-#slide-window {
+/* #slide-window {
+  border: solid 2px white;
+  padding: 0px;
+} */
+
+.slide-window-show {
+  visibility: visible;
   border: solid 2px white;
   padding: 0px;
 }
+
+.slide-window-hide {
+  visibility: hidden;
+  border: none; 
+}
+
 
 /* Photo by David Emrich on Unsplash */
 

@@ -13,32 +13,15 @@
 // Web-Page:  nesponsive layout leveraging bootstrap.
 //    JQuery for dynamic activty of onpage objects and styles.
 // 
-// The "state" logic guides the experience and page activity
-// as the player progresses thru each quiz 
-// 
-// State flow allows for game reset after completion
-// Start/Restart and Next Quiz buttons are disable/enabled
-// relative to the game state
-
 // ---------------------------------------------------------
 // Refactor Needs:
 // ---------------------------------------------------------
 // goals of this project were:
-// 1.  get more experience with bootstrap and have a repsonsive design
-// 2.  explore use of classes
-// 3.  learn use of Timers
+// 1.  use API to retrieve data
+// 2.  leverage local storage
+// 3.  get more experience with bootstrap and have a repsonsive design
 // 
-// these goals were achieved.  classes were used to define
-// Question and QuestionPool
-// however, learning curve of new material, Timers, prevented
-// completion of using more class and/or object on other parts
-// of the design, instead global functions were leveraged
-// So refactoring should include:
-// 1. refactor to use class/objects for the timers
-// 2. refactor to use class/objects for the game flow logic
-// 3. refactor to have an object/methods for support to the page element updates
-// 4. general code cleanup and reorganization 
-// 5. update user stories/use cases to match final design
+
 
 // ---------------------------------------------------------
 // Enhancements:
@@ -116,7 +99,7 @@ $(document).ready(function(){
   // how many Gifs to retrieve
   var howManyGifs = 10;
   // terms array
-  var gifTermArray = ["cats","anteaters","dogs","birds","cats omg","fish","lizard","panda","whales"];
+  // var gifTermArray = ["cats","anteaters","dogs","birds","cats omg","fish","lizard","panda","whales"];
   var retrievedTerms = [];
 
   // development variables - should be discarded after
@@ -143,6 +126,7 @@ $(document).ready(function(){
 
     // hide carousel
     hideCarousel: function() {
+      console.log("in userInterface.hideCarousel");
       $('#slide-window').addClass('slide-window-hide');
       $('#slide-window').removeClass('slide-window-show');
       $("#carousel-control-prev").css("visibility","hidden");
@@ -151,6 +135,7 @@ $(document).ready(function(){
 
     // show carousel
     showCarousel: function() {
+      console.log("in userInterface.showCarousel");
       $('#slide-window').addClass('slide-window-show');
       $('#slide-window').removeClass('slide-window-hide');
       $("#carousel-control-prev").css("visibility","visible");
@@ -159,10 +144,28 @@ $(document).ready(function(){
 
     // clear the display of Gifs
     clearTermsFromPage: function () {
+      console.log("in userInterface.clearTermsFromPage");
     //   $("#gif-div").empty();
       $("#carouselExampleIndicators>ol").remove();
       $("#carouselExampleIndicators>div").remove();
 
+    },
+
+
+    // clear terms from drop down list
+    clearTermsFromDropDownList: function () {
+      console.log("in userInterface.clearTermsFromDropDownList");
+    // //   $("#gif-div").empty();
+    //   $("#carouselExampleIndicators>ol").remove();
+    //   $("#carouselExampleIndicators>div").remove();
+    },
+
+    // build drop down list
+    buildDropDownList: function () {
+      console.log("in userInterface.buildDropDownList");
+    // //   $("#gif-div").empty();
+    //   $("#carouselExampleIndicators>ol").remove();
+    //   $("#carouselExampleIndicators>div").remove();
     },
 
     // get terms from Api and load to display
@@ -252,53 +255,15 @@ $(document).ready(function(){
           $(".carousel-inner").append(carouselItemDiv);
 
           // build img tag
-          var img = $("<img>").attr("src",results[i].images.fixed_height.url);
+          var img = $("<img>").attr("src",results[i].images.downsized.url);
           // var img = $("<img>").attr("src",results[i].images.fixed_width.url);
           img.addClass('d-block w-100');
           img.attr("alt",results[i].title);
 
           // append img tag
           carouselItemDiv.append(img);
-
-
-
-
-
-        // // Step 3: uncomment the for loop above and the closing curly bracket below.
-        // // Make a div with jQuery and store it in a variable named animalDiv.
-        // // ============= put step 3 in between these dashes ======================
-        // var animalDiv = $("<div>");
-        // console.log(animalDiv);
-        // // Make a paragraph tag with jQuery and store it in a variable named p.
-        // var p = $("<p>");
-        // console.log(p);
-
-        // // Set the inner text of the paragraph to the rating of the image in results[i].
-        // p.text("Rating: " + results[i].rating);
-        // console.log(p);
-        // // Make an image tag with jQuery and store it in a variable named animalImage.
-        // var animalImage = $("<img>");
-        // console.log(animalImage);
-
-        // // Set the image's src to results[i]'s fixed_height.url.
-        // animalImage.attr("src",results[i].images.fixed_height.url);
-        // console.log(animalImage);
-
-        // // Append the p variable to the animalDiv variable.
-        // animalDiv.append(p);
-        
-        // // Append the animalImage variable to the animalDiv variable.
-        // animalDiv.append(animalImage);
-        // // Prepend the animalDiv variable to the element with an id of gifs-appear-here.
-        // $("#gifs-appear-here").prepend(animalDiv); 
-
-
-        // ==================================
         }
-
       });
-
-
     },  
 
     // diagnostic output to console
@@ -314,30 +279,66 @@ $(document).ready(function(){
   // ---------------------------------------------------------
   // object for search terms  
   // ---------------------------------------------------------
-  var localStorageTerms = {
+  var gifTerms = {
     // local variables go here
+    gifTermArray: [],
 
     // methods go here
     clearStorage: function() {
+      console.log("in gifTerms.clearStorage");
       localStorage.clear();
     },
 
     // save terms array in local storage
-    saveTermsInStorage: function(arr) {
-      console.log("in localStorageTerms.saveTermsInStorage");
-      console.log("terms to save in storage: ", arr);
-      localStorage.setItem("terms",arr);
+    saveTermsInStorage: function() {
+      console.log("in gifTerms.saveTermsInStorage");
+      // console.log("terms to save in storage: ", arr);
+      // localStorage.setItem("terms",arr);
+      console.log("terms to save in storage: ", this.gifTermArray);
+      localStorage.setItem("terms",this.gifTermArray);
     },
 
     // get terms array from local storage
     getTermsFromStorage: function() {
-      console.log("in localStorageTerms.getTermsFromStorage");
-      var arr = localStorage.getItem("terms");
+      console.log("in gifTerms.getTermsFromStorage");
+      // var arr = localStorage.getItem("terms");
       // console.log("terms from storage: ",arr);
+      this.gifTermArray =  localStorage.getItem("terms").split(','); //arr.split(',');
+      // return arr;
+    },
 
-      return arr;ß
-    }
+    // add term 
+    addTerm: function(term) {
+      console.log("in gifTerms.addTerm");
+      console.log("adding term: " + term);
+      this.gifTermArray.push(term);
+      this.clearStorage();
+      // look into moving gifTermArray into this object instead of global
+      // this.saveTermsInStorage(this.gifTermArray);
+      this.saveTermsInStorage();
+      // need to add it to the dropdown list also
+      // put code for drop down list right here
+    },
 
+    // need method to save the Active drop down item into local storage
+    saveActiveDropDownItemInStorage: function () {
+      console.log("in gifTerms.saveActiveDropDownItemInStorage");
+    },
+
+    // need method to clear the Active drop down item from local storage
+    clearActiveDropDownItemFromStorage: function () {
+      console.log("in gifTerms.clearctiveDropDownItemFromStorage");
+    },
+
+    // need method to get the Active drop down item from local storage
+    getctiveDropDownItemFromStorage: function () {
+      console.log("in gifTerms.getActiveDropDownItemFromStorage");
+    },
+
+    // need method to get the clear the gif term array 
+    clearGifTermArray: function () {
+      console.log("in gifTerms.clearGifTermArray");
+    },
 
   };
 
@@ -348,13 +349,19 @@ $(document).ready(function(){
   // init activity
   
   userInterface.clearTermsFromPage();
-  userInterface.getTermsFromApi("cats");
+  userInterface.getTermsFromApi("omg cats");
   userInterface.showCarousel();
   // localStorageTerms.clearStorage();
-  retrievedTerms = localStorageTerms.getTermsFromStorage();
-  console.log("terms from storage: ", retrievedTerms);
+  // retrievedTerms = gifTerms.getTermsFromStorage();
+  // console.log("retrieved terms: ", retrievedTerms);
+  // need to take retrievedTerms and put it into array gifTermArray
+  // gifTerms.gifTermArray = retrievedTerms.split(',');
+  gifTerms.getTermsFromStorage();
+  console.log("gifTermsArray is now: ",gifTerms.gifTermArray)
 
-  localStorageTerms.saveTermsInStorage(gifTermArray);
+  // gifTerms.gifTermArray = gifTerms.getTermsFromStorage().split(',');
+
+  // gifTerms.saveTermsInStorage(gifTerms.gifTermArray);
   // userInterface.hideCarousel();
 
 
@@ -366,15 +373,36 @@ $(document).ready(function(){
   // Events and timers
   // ----------------------------------------------------------------------------
  
-  // answer button event
-  //  cancel the question timer &  start the intermission timer
+ // get value of clicked drop down list
   $(".dropdown-item").on("click",function() {
     console.log("in global.dropdown-item click event");
+    console.log("you pressed: " + $(this).val());
     var clickedText = $(this).text();
     console.log("text is: ",clickedText); 
     userInterface.clearTermsFromPage();
     userInterface.getTermsFromApi(clickedText);
   });
+
+
+  // get value for search box
+  $("#search-btn").on("click", function(event) {
+    console.log("in global.search-btn click event");
+    event.preventDefault();
+
+    var search = $("#search-input").val().trim();
+    console.log("you typed: " + search);
+    gifTerms.addTerm(search);
+  });
+
+  // clear button event
+  $("#clear-btn").on("click",function() {
+    console.log("in global.clear-btn click event")
+    // need to call gifTerm methods to
+    // clear gifTerm array
+    // clear the drop down box
+  
+  });
+
 
   // $('.dropdown-menu a').on('click', function() {
   //   console.log("value is: ", $(this).val());

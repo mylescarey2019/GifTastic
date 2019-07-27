@@ -116,7 +116,8 @@ $(document).ready(function(){
   // how many Gifs to retrieve
   var howManyGifs = 10;
   // terms array
-  var gifTermArray = ["cats","anteaters","dogs","birds","deer","fish","lizard","panda","whales"];
+  var gifTermArray = ["cats","anteaters","dogs","birds","cats omg","fish","lizard","panda","whales"];
+  var retrievedTerms = [];
 
   // development variables - should be discarded after
   // development of objects is completed
@@ -165,10 +166,10 @@ $(document).ready(function(){
     },
 
     // get terms from Api and load to display
-    getTermsFromApi: function() {
+    getTermsFromApi: function(term) {
       // giphy API
       var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
-      searchTerm + "&api_key=0JE3zH3fHeV6OOG9CJYtmcvuFO8d0Gys&limit=" + howManyGifs + '"';        
+      term + "&api_key=0JE3zH3fHeV6OOG9CJYtmcvuFO8d0Gys&rating=g&limit=" + howManyGifs + '"';        
 
       $.ajax({
         url: queryURL,
@@ -321,9 +322,20 @@ $(document).ready(function(){
       localStorage.clear();
     },
 
-    // save terms array
-    saveTermsInStorage: function() {
-      localStorage.setItem("terms",gifTermArray);
+    // save terms array in local storage
+    saveTermsInStorage: function(arr) {
+      console.log("in localStorageTerms.saveTermsInStorage");
+      console.log("terms to save in storage: ", arr);
+      localStorage.setItem("terms",arr);
+    },
+
+    // get terms array from local storage
+    getTermsFromStorage: function() {
+      console.log("in localStorageTerms.getTermsFromStorage");
+      var arr = localStorage.getItem("terms");
+      // console.log("terms from storage: ",arr);
+
+      return arr;ß
     }
 
 
@@ -336,10 +348,13 @@ $(document).ready(function(){
   // init activity
   
   userInterface.clearTermsFromPage();
-  userInterface.getTermsFromApi();
+  userInterface.getTermsFromApi("cats");
   userInterface.showCarousel();
-  localStorageTerms.clearStorage();
-  localStorageTerms.saveTermsInStorage();
+  // localStorageTerms.clearStorage();
+  retrievedTerms = localStorageTerms.getTermsFromStorage();
+  console.log("terms from storage: ", retrievedTerms);
+
+  localStorageTerms.saveTermsInStorage(gifTermArray);
   // userInterface.hideCarousel();
 
 
@@ -350,7 +365,35 @@ $(document).ready(function(){
   // ----------------------------------------------------------------------------
   // Events and timers
   // ----------------------------------------------------------------------------
-  
+ 
+  // answer button event
+  //  cancel the question timer &  start the intermission timer
+  $(".dropdown-item").on("click",function() {
+    console.log("in global.dropdown-item click event");
+    var clickedText = $(this).text();
+    console.log("text is: ",clickedText); 
+    userInterface.clearTermsFromPage();
+    userInterface.getTermsFromApi(clickedText);
+  });
+
+  // $('.dropdown-menu a').on('click', function() {
+  //   console.log("value is: ", $(this).val());
+  // });
+
+
+  // $(".dropdown-item").on("click", function(e) {
+  //   console.log("in dropdown-item.on.click");
+  //   console.log("CLICK: " + e.type);
+  //   console.log("CLICK: " + e.which);
+  //   console.log("CLICK: " + e.target);
+  //   var button = $(event.target).closest('dropdown-item');
+  //   console.log("You clicked on: ", button);
+  //   console.log("that was: ", button.innerText);
+  //   console.log("value is:  ", $(this).val());
+   
+    
+  // });
+
   
 // //  start - restart button event
 //   $("#start-restart").on("click", function(event) {

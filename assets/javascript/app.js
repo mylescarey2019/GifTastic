@@ -89,6 +89,17 @@
 //     2. on click for search term box
 //     3. on click for clear search button  
 
+
+// *** MRC - TO DO LIST ***
+// 1. use data attribute on dropdown list - ex: data-value="cat omg"
+// 2. build dropdown list dynamically
+// 3. save/retrieve active dropdown item
+// 4. have model splash form with instructions if no saved search terms are found at page load
+// 5. add About form with attributes (powered by giphy; background photo)
+//    b) or use footer
+// fix the slide indicators so they move with the slide position changes
+// fix the slide indicators so that they are bound to the dynamic html slide list
+
 // ---------------------------------------------------------
 // Global Variables
 // ---------------------------------------------------------
@@ -146,8 +157,8 @@ $(document).ready(function(){
     clearTermsFromPage: function () {
       console.log("in userInterface.clearTermsFromPage");
     //   $("#gif-div").empty();
-      $("#carouselExampleIndicators>ol").remove();
-      $("#carouselExampleIndicators>div").remove();
+      $("#myCarousel>ol").remove();
+      $("#myCarousel>div").remove();
 
     },
 
@@ -155,21 +166,37 @@ $(document).ready(function(){
     // clear terms from drop down list
     clearTermsFromDropDownList: function () {
       console.log("in userInterface.clearTermsFromDropDownList");
-    // //   $("#gif-div").empty();
-    //   $("#carouselExampleIndicators>ol").remove();
-    //   $("#carouselExampleIndicators>div").remove();
+      $(".dropdown-menu").empty();
     },
 
     // build drop down list
     buildDropDownList: function () {
       console.log("in userInterface.buildDropDownList");
-    // //   $("#gif-div").empty();
-    //   $("#carouselExampleIndicators>ol").remove();
-    //   $("#carouselExampleIndicators>div").remove();
+
+          //   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          //   <a class="dropdown-item active" data-value="cats" href="#">cats</a>
+          //   <a class="dropdown-item" data-value="anteaters" href="#">anteaters</a>
+          //   <a class="dropdown-item" data-value="dogX" href="#">dogs</a>
+          //   <a class="dropdown-item" data-value="cats omg" href="#">cats omg</a>
+          //   <a class="dropdown-item" data-value="deer" href="#">deer</a>
+          //   <a class="dropdown-item" data-value="fish" href="#">fish</a>
+          //   <a class="dropdown-item" data-value="lizard" href="#">lizard</a>
+          //   <a class="dropdown-item" data-value="panda"  href="#">panda</a>
+          //   <a class="dropdown-item" data-value="whales" href="#">whales</a>
+          // </div>
+
+      // build drop down control items
+
+      for (var i = 0; i < gifTerms.gifTermArray.length; i++) {
+        var a = $('<a class="dropdown-item" data-value="' + gifTerms.gifTermArray[i] + '" href="#">' + gifTerms.gifTermArray[i] + '</a>');
+        $(".dropdown-menu").append(a);
+      };
     },
 
     // get terms from Api and load to display
     getTermsFromApi: function(term) {
+      console.log("in userInterface.getTermsFromApi");
+      console.log("api term is: ", term);
       // giphy API
       var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
       term + "&api_key=0JE3zH3fHeV6OOG9CJYtmcvuFO8d0Gys&rating=g&limit=" + howManyGifs + '"';        
@@ -186,9 +213,9 @@ $(document).ready(function(){
 
       // <div id="gif-div">
       //   <ol class="carousel-indicators">
-      //     <li data-target="#carouselExampleIndicators" data-slide-to="0"></li>
-      //     <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-      //     <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+      //     <li data-target="#myCarousel" data-slide-to="0"></li>
+      //     <li data-target="#myCarousel" data-slide-to="1"></li>
+      //     <li data-target="#myCarousel" data-slide-to="2"></li>
       //   </ol>
       //   <div class="carousel-inner">
       //     <div class="carousel-item active">
@@ -211,8 +238,8 @@ $(document).ready(function(){
         // $("#gif-div").append(carouselOl);
         // $("#gif-div").append('<div class="carousel-inner">');
 
-        $("#carouselExampleIndicators").prepend('<div class="carousel-inner">');
-        $("#carouselExampleIndicators").prepend(carouselOl);
+        $("#myCarousel").prepend('<div class="carousel-inner">');
+        $("#myCarousel").prepend(carouselOl);
 
       
 
@@ -228,18 +255,18 @@ $(document).ready(function(){
         for (var i = 0; i < results.length; i++) {
           // build list items for carousel indicators
           if (i === 0) {
-            var li = $('<li data-target="#carouselExampleIndicators" data-slide-to="' + i + '" class="active">');
+            var li = $('<li data-target="#myCarousel" data-slide-to="' + i + '" class="active">');
             // li.addClass("active");
             console.log("li: ", li);
-            $("#carouselExampleIndicators>ol").append(li);
+            $("#myCarousel>ol").append(li);
             // $("#gif-div>ol").append(li);
 
           }
           else {
-            var li = $('<li data-target="#carouselExampleIndicators" data-slide-to="' + i + '">');
+            var li = $('<li data-target="#myCarousel" data-slide-to="' + i + '">');
             console.log("li: ", li);
             // $("#gif-div>ol").append(li);
-            $("#carouselExampleIndicators>ol").append(li);
+            $("#myCarousel>ol").append(li);
           };
 
 
@@ -284,9 +311,9 @@ $(document).ready(function(){
     gifTermArray: [],
 
     // methods go here
-    clearStorage: function() {
+    clearStorage: function(prop) {
       console.log("in gifTerms.clearStorage");
-      localStorage.clear();
+      localStorage.removeItem(prop);
     },
 
     // save terms array in local storage
@@ -301,9 +328,15 @@ $(document).ready(function(){
     // get terms array from local storage
     getTermsFromStorage: function() {
       console.log("in gifTerms.getTermsFromStorage");
-      // var arr = localStorage.getItem("terms");
-      // console.log("terms from storage: ",arr);
-      this.gifTermArray =  localStorage.getItem("terms").split(','); //arr.split(',');
+      var arr = localStorage.getItem("terms");
+      console.log("terms from storage: ",arr);
+      if (arr === null) {
+        console.log("no saved searches on local storage");
+      }
+      else {
+        this.gifTermArray =  localStorage.getItem("terms").split(','); //arr.split(',');
+      }
+    
       // return arr;
     },
 
@@ -312,33 +345,48 @@ $(document).ready(function(){
       console.log("in gifTerms.addTerm");
       console.log("adding term: " + term);
       this.gifTermArray.push(term);
-      this.clearStorage();
+      console.log("number of saved terms: ",gifTerms.gifTermArray.length);
+      this.clearStorage("terms");
       // look into moving gifTermArray into this object instead of global
       // this.saveTermsInStorage(this.gifTermArray);
       this.saveTermsInStorage();
+
+
+      var a = $('<a class="dropdown-item" data-value="' + term + '" href="#">' + term + '</a>');
+      $(".dropdown-menu").append(a);
+
+      // userInterface.clearTermsFromDropDownList();
+      // userInterface.buildDropDownList();
+
       // need to add it to the dropdown list also
       // put code for drop down list right here
     },
 
     // need method to save the Active drop down item into local storage
-    saveActiveDropDownItemInStorage: function () {
+    saveActiveDropDownItemInStorage: function (activeItem) {
       console.log("in gifTerms.saveActiveDropDownItemInStorage");
+      localStorage.setItem("active-item",activeItem);
     },
 
     // need method to clear the Active drop down item from local storage
     clearActiveDropDownItemFromStorage: function () {
       console.log("in gifTerms.clearctiveDropDownItemFromStorage");
+      gifTerms.clearStorage("active-item");
     },
 
     // need method to get the Active drop down item from local storage
-    getctiveDropDownItemFromStorage: function () {
+    getActiveDropDownItemFromStorage: function () {
       console.log("in gifTerms.getActiveDropDownItemFromStorage");
+      var activeItem = localStorage.getItem("active-item");
+      return activeItem;
     },
 
-    // need method to get the clear the gif term array 
+    // clear the gif term array
     clearGifTermArray: function () {
       console.log("in gifTerms.clearGifTermArray");
+      this.gifTermArray.splice(0,this.gifTermArray.length);
     },
+
 
   };
 
@@ -346,26 +394,57 @@ $(document).ready(function(){
   // ----------------------------------------------------------------------------
   //  START OF PROGRAM FLOW
   // ----------------------------------------------------------------------------
-  // init activity
+
   
-  userInterface.clearTermsFromPage();
-  userInterface.getTermsFromApi("omg cats");
-  userInterface.showCarousel();
-  // localStorageTerms.clearStorage();
-  // retrievedTerms = gifTerms.getTermsFromStorage();
-  // console.log("retrieved terms: ", retrievedTerms);
-  // need to take retrievedTerms and put it into array gifTermArray
-  // gifTerms.gifTermArray = retrievedTerms.split(',');
-  gifTerms.getTermsFromStorage();
-  console.log("gifTermsArray is now: ",gifTerms.gifTermArray)
-
-  // gifTerms.gifTermArray = gifTerms.getTermsFromStorage().split(',');
-
-  // gifTerms.saveTermsInStorage(gifTerms.gifTermArray);
-  // userInterface.hideCarousel();
-
-
+  // userInterface.clearTermsFromPage();
+  // userInterface.getTermsFromApi("omg cats");
   // userInterface.showCarousel();
+  userInterface.hideCarousel();
+  gifTerms.getTermsFromStorage();
+
+  
+  console.log("gifTermsArray is now: ",gifTerms.gifTermArray)
+  if (gifTerms.gifTermArray.length > 0) {
+    userInterface.showCarousel();
+    userInterface.buildDropDownList();
+    // $('.dropdown-item[data-value="' + gifTerms.gifTermArray[0] +'"]').addClass("active");
+    
+    var activeItem = gifTerms.getActiveDropDownItemFromStorage();
+    if (activeItem !== ''){
+      $('.dropdown-item[data-value="' + activeItem +'"]').addClass("active");
+      userInterface.getTermsFromApi(activeItem);
+    }
+    else {
+      // should not be in this state, but if so then set/load first from list
+      $('.dropdown-item[data-value="' + gifTerms.gifTermArray[0] +'"]').addClass("active");
+      userInterface.getTermsFromApi(gifTerms.gifTermArray[0]);
+    };
+ 
+    // $("#search-input").val('');
+    // gifTerms.clearStorage(active-item);
+    // gifTerms.saveActiveDropDownItemInStorage(search);
+  };
+  
+  
+
+
+
+        // localStorageTerms.clearStorage();
+        // retrievedTerms = gifTerms.getTermsFromStorage();
+        // console.log("retrieved terms: ", retrievedTerms);
+        // need to take retrievedTerms and put it into array gifTermArray
+        // gifTerms.gifTermArray = retrievedTerms.split(',');
+
+
+ 
+
+        // gifTerms.gifTermArray = gifTerms.getTermsFromStorage().split(',');
+
+        // gifTerms.saveTermsInStorage(gifTerms.gifTermArray);
+        // userInterface.hideCarousel();
+
+
+        // userInterface.showCarousel();
 
 
   
@@ -374,13 +453,30 @@ $(document).ready(function(){
   // ----------------------------------------------------------------------------
  
  // get value of clicked drop down list
-  $(".dropdown-item").on("click",function() {
+  // $(".dropdown-item").on("click",function() {
+  //   console.log("in global.dropdown-item click event");
+  //   console.log("you pressed: " + $(this).data("value"));
+  //   var clickedText = $(this).text();
+  //   console.log("text is: ",clickedText); 
+  //   userInterface.clearTermsFromPage();
+  //   userInterface.getTermsFromApi(clickedText);
+  // });
+
+  $(document).on("click", ".dropdown-item", function() {
     console.log("in global.dropdown-item click event");
-    console.log("you pressed: " + $(this).val());
+    console.log("you pressed: " + $(this).data("value"));
     var clickedText = $(this).text();
     console.log("text is: ",clickedText); 
     userInterface.clearTermsFromPage();
     userInterface.getTermsFromApi(clickedText);
+    $('.dropdown-item.active').removeClass("active");
+    $('.dropdown-item[data-value="' + clickedText +'"]').addClass("active");
+    gifTerms.clearStorage("active-item");
+    gifTerms.saveActiveDropDownItemInStorage(clickedText);
+    if (gifTerms.gifTermArray.length === 1) {
+      // first term so carousel is probably hidden
+      userInterface.showCarousel();
+    };
   });
 
 
@@ -391,7 +487,20 @@ $(document).ready(function(){
 
     var search = $("#search-input").val().trim();
     console.log("you typed: " + search);
-    gifTerms.addTerm(search);
+    if (search !== '') { 
+      userInterface.clearTermsFromPage();
+      userInterface.getTermsFromApi(search);
+      gifTerms.addTerm(search);
+      $('.dropdown-item.active').removeClass("active");
+      $('.dropdown-item[data-value="' + search +'"]').addClass("active");
+      $("#search-input").val('');
+      gifTerms.clearStorage("active-item");
+      gifTerms.saveActiveDropDownItemInStorage(search);
+      if (gifTerms.gifTermArray.length === 1) {
+        // first term so carousel is probably hidden
+        userInterface.showCarousel();
+      };
+    };
   });
 
   // clear button event
@@ -400,6 +509,12 @@ $(document).ready(function(){
     // need to call gifTerm methods to
     // clear gifTerm array
     // clear the drop down box
+    // clear local storage
+    gifTerms.clearGifTermArray();
+    userInterface.clearTermsFromDropDownList();
+    gifTerms.clearStorage("terms");
+    gifTerms.clearActiveDropDownItemFromStorage();
+
   
   });
 

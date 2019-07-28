@@ -49,6 +49,7 @@ body {
 
 #footer-text {
   color: #ffffff;
+  font-size: 10px;
 }
 
 /* First breakpoint - these rules take effect at maximum browser's width

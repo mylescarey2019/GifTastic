@@ -47,7 +47,9 @@ body {
   border: none; 
 }
 
-
+#footer-text {
+  color: #ffffff;
+}
 
 /* First breakpoint - these rules take effect at maximum browser's width
    of 575px */
@@ -55,6 +57,19 @@ body {
   
     #search-input {
       margin-right: 10px;
+    }
+
+    #giphy-logo {
+      width: 150px;
+      height: 20px;
+    }
+
+    #footer-text {
+      font-size: 8px;
+    }
+
+    #footer-bar {
+      padding: 8px 4px;
     }
 }
   

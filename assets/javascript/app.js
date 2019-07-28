@@ -427,7 +427,12 @@ $(document).ready(function(){
     // $("#search-input").val('');
     // gifTerms.clearStorage(active-item);
     // gifTerms.saveActiveDropDownItemInStorage(search);
-  };
+  }
+  else {
+    // no saved searchs so show instruction modal
+    console.log("in modal section");
+    $('#my-modal').modal('show');
+  }
   
   
 

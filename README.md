@@ -18,12 +18,15 @@ in local storage.
 This page was created using HTML, CSS, Bootstrap, Javascript, JQuery, Bootstrap and the Giphy API.
 
 Instruction modal:
+
 ![Gif-U-Break-Instructions](assets/images/wireframe1.png)
 
 Gif page:
+
 ![Gif-U-Break-page](assets/images/wireframe1b.png)
 
-Mobil - showing collapsable menu
+Mobil - showing collapsable menu:
+
 ![Gif-U-Break-mobil](assets/images/wireframe-mobil.png)
 
 ## Getting Started

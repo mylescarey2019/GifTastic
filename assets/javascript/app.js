@@ -231,15 +231,18 @@ $(document).ready(function(){
       // </div>
 
         console.log("length is: ", results.length);
-        // build empty carousel ordered list 
-        var carouselOl = $('<ol class="carousel-indicators">');
-        console.log("ol: ", carouselOl);
-        // append to the gif-div
-        // $("#gif-div").append(carouselOl);
-        // $("#gif-div").append('<div class="carousel-inner">');
+
+        //  *** taking out until time to resolve issue ***
+            // // build empty carousel ordered list 
+            // var carouselOl = $('<ol class="carousel-indicators">');
+            // console.log("ol: ", carouselOl);
+            //     // append to the gif-div
+            //     // $("#gif-div").append(carouselOl);
+            //     // $("#gif-div").append('<div class="carousel-inner">');
 
         $("#myCarousel").prepend('<div class="carousel-inner">');
-        $("#myCarousel").prepend(carouselOl);
+        //  *** taking out until time to resolve issue ***
+        // $("#myCarousel").prepend(carouselOl);
 
       
 
@@ -253,21 +256,22 @@ $(document).ready(function(){
  
        
         for (var i = 0; i < results.length; i++) {
-          // build list items for carousel indicators
-          if (i === 0) {
-            var li = $('<li data-target="#myCarousel" data-slide-to="' + i + '" class="active">');
-            // li.addClass("active");
-            console.log("li: ", li);
-            $("#myCarousel>ol").append(li);
-            // $("#gif-div>ol").append(li);
+          //  *** taking out until time to resolve issue ***
+          // // build list items for carousel indicators  
+          // if (i === 0) {
+          //   var li = $('<li data-target="#myCarousel" data-slide-to="' + i + '" class="active">');
+          //   // li.addClass("active");
+          //   console.log("li: ", li);
+          //   $("#myCarousel>ol").append(li);
+          //   // $("#gif-div>ol").append(li);
 
-          }
-          else {
-            var li = $('<li data-target="#myCarousel" data-slide-to="' + i + '">');
-            console.log("li: ", li);
-            // $("#gif-div>ol").append(li);
-            $("#myCarousel>ol").append(li);
-          };
+          // }
+          // else {
+          //   var li = $('<li data-target="#myCarousel" data-slide-to="' + i + '">');
+          //   console.log("li: ", li);
+          //   // $("#gif-div>ol").append(li);
+          //   $("#myCarousel>ol").append(li);
+          // };
 
 
           // build inner item div

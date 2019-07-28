@@ -20,8 +20,6 @@ CSS - Periodic Table Trivia Game
   margin-top: 150px;
   margin-left: auto;
   margin-right: auto;
-  /* opacity: 50%; */
-  /* background-color: white; */
 }
 
 
@@ -38,11 +36,6 @@ body {
   padding-top: 56px;
 }
 
-/* #slide-window {
-  border: solid 2px white;
-  padding: 0px;
-} */
-
 .slide-window-show {
   visibility: visible;
   border: solid 2px white;
@@ -55,106 +48,6 @@ body {
 }
 
 
-/* Photo by David Emrich on Unsplash */
-
-/*
-#start-restart, #next-quiz {
-  width: 100px;
-}
-.jumbotron {
-  margin-top: 40px;
-  visibility: visible;
-  background-color: rgba(190,183,171,.9);
-  font-weight: bolder;
-  margin-left: 5%;
-  margin-right: 5%;
-}
-
-.lead {
-  font-size: 1.4 rem;
-}
-
-#info-line {  
-  font-weight: 400;
-}
-
-
-nav {
-  background-color: #7e7058;
-}
-
-nav-item {
-  margin-right: 10px;
-  margin-top: 10px;
-}
-
-#header {
-width: 100%;
-margin-left: auto;
-
-}
-
-.btn {
-margin-left: 10px;
-float: right;
-}
-
-#timer {
-  color: #818182;
-  width: 100px;
-  margin: auto;
-  text-align: center;
-  padding: 5px;
-  background-color: #fdfdfe;
-  border-radius: .25rem;
-}
-
-.list-group-item {
-  text-align: center;
-}
-
-.list-group-item-action {
-  text-align: center;
-  font-size: 20px;
-  font-weight: bold;
-  padding: 5px;
-  border-radius: .25rem;
-  margin-bottom: -1px;
-}
-
-.hide-container {
-  display: none;
-}
-
- 
-#inner-container-2 {
-  height: 164px;
-  padding: 40px 10px 10px 10px;
-  font-size: 16px;
-  text-align: center;
-  color: #818182;
-  border-radius: .25rem;
-  background-color: #fdfdfe;
-  margin-bottom: 0px;
-}
-
-
-
-.progress {
-  margin-top: 10px;
-}  
-
-#key {
-  padding: 5px;
-  font-size: 10px;
-  text-align: center;
-  color: #818182;
-  border-radius: .25rem;
-  background-color: #fdfdfe;
-  margin-top: 10px;
-} */
-/* media query section */
-
 
 /* First breakpoint - these rules take effect at maximum browser's width
    of 575px */
@@ -163,16 +56,6 @@ float: right;
     #search-input {
       margin-right: 10px;
     }
-    /* body {ß
-      padding-top: 96px;
-    }
-
-    #inner-container-2 {
-      font-size: 12px;
-    }
-
-    h1.display-4 {
-      font-size: 36px; */
-    }
+}
   
 

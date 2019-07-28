@@ -4,17 +4,27 @@ Gif Retrieval Web Page
 
 ## Description
  
-This page retrieves Gif using the Gihpy API.  The user can select from several predifined animaly topics.
-Selecting a topic will load multiple Gifs from the Gihpy API related to the topic.
+This page retrieves Gif using the Gihpy API.  The user enters a search term such as 'cats'
+and 10 Gifs will be loaded into a carousel display.  
 
-The users can also add the the list of topics via a search box.
+Search terms are saved in a dropdown list and local storage for device persistance.
+A clear button allows all saved searches to be removed.
 
-Topics are selectable via a header bar dropdown box.  
+The current Gif search is highlighted in the dropdown list and is remembered on page reload.
 
-///// finish read me detail below
+There is a modal form with instructions that displays if the page finds no saved searches 
+in local storage.
 
-![Gif-U-Break](assets/images/wireframe1.png)
+This page was created using HTML, CSS, Bootstrap, Javascript, JQuery, Bootstrap and the Giphy API.
 
+Instruction modal:
+![Gif-U-Break-Instructions](assets/images/wireframe1.png)
+
+Gif page:
+![Gif-U-Break-page](assets/images/wireframe1b.png)
+
+Mobil - showing collapsable menu
+![Gif-U-Break-mobil](assets/images/wireframe-mobil.png)
 
 ## Getting Started
 
@@ -29,9 +39,10 @@ Topics are selectable via a header bar dropdown box.
 ### Executing program
 
 * open in browser and follow instructions
-*   1. click on unordered list of possible answers for each question
-    2. play another set of 10 questions after completing one
-    3. option to re-play all sets of questions after they have been completed
+*   1. enter search terms
+    2. Use arrow controls to cycle thru the 10 retrieved Gifs
+    3. Search terms are saved in drop-down for reuse
+    2. Use Clear button to remove all saved searches
     
 
 ## Help

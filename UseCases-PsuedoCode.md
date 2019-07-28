@@ -12,7 +12,6 @@ Intent is to make the topics are selectable via a header bar dropdown box instea
 Will try to have Gifs presented in carosel or gallery.
 If time permists will leverage local storage to perist the search topics entered by user.
 
-///// complete user story/use case details below
 
 ![preliminary wireframe drawing](assets/images/wireframe0.png)
 

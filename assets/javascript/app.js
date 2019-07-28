@@ -2,13 +2,18 @@
 // Gif Break web page
 // ---------------------------------------------------------
 // Summary:
-
+// Gif retrieval page - allows user to search and save search
+// terms which are loaded to a drop down list.
+// Searches return 10 Gifs from Giphy API
+// Search terms are persisted in local storage.
+// User can remove all search terms via a clear button.
 // ---------------------------------------------------------
 
 // ---------------------------------------------------------
 // Methodology:
 // ---------------------------------------------------------
 // Logic layer:  javascript object/methods, button click events
+//    GIPHY API
 // 
 // Web-Page:  nesponsive layout leveraging bootstrap.
 //    JQuery for dynamic activty of onpage objects and styles.
@@ -21,12 +26,19 @@
 // 2.  leverage local storage
 // 3.  get more experience with bootstrap and have a repsonsive design
 // 
+// 4. above was achieved, but the javascript could use a bit of 
+//    re-organization and reduction of over-engineering in places
+// 5. did not get the requirement of start/stop Gifs via click
+//    woudl like to revisit and add this in
 
 
 // ---------------------------------------------------------
 // Enhancements:
 // ---------------------------------------------------------
-// 
+// 1. revisit to re-add active slide indicators/click to jump 
+//    controls.  I had to take these out for lack of time 
+//    needed to learn how to re-bind the carousel items 
+//    after the page dynamically loads them for each new seach
 
 // ---------------------------------------------------------
 // User Stories / Use Cases
@@ -89,17 +101,6 @@
 //     2. on click for search term box
 //     3. on click for clear search button  
 
-
-// *** MRC - TO DO LIST ***
-// 1. use data attribute on dropdown list - ex: data-value="cat omg"
-// 2. build dropdown list dynamically
-// 3. save/retrieve active dropdown item
-// 4. have model splash form with instructions if no saved search terms are found at page load
-// 5. add About form with attributes (powered by giphy; background photo)
-//    b) or use footer
-// fix the slide indicators so they move with the slide position changes
-// fix the slide indicators so that they are bound to the dynamic html slide list
-
 // ---------------------------------------------------------
 // Global Variables
 // ---------------------------------------------------------
@@ -109,20 +110,7 @@ $(document).ready(function(){
 
   // how many Gifs to retrieve
   var howManyGifs = 10;
-  // terms array
-  // var gifTermArray = ["cats","anteaters","dogs","birds","cats omg","fish","lizard","panda","whales"];
-  var retrievedTerms = [];
 
-  // development variables - should be discarded after
-  // development of objects is completed
-  var searchTerm = "cat omg";
-  
-  // screen texts
-  var instructionText = "instuctions go here" 
-  
-  
-  
-  
   // ---------------------------------------------------------
   // Objects, Classes & Methhods:
   // ---------------------------------------------------------
@@ -131,9 +119,9 @@ $(document).ready(function(){
   // object for user interface - i.e. html page elements
   // ---------------------------------------------------------
   var userInterface = {
-    // local variables go here
+    // local variables go here:
 
-    // methods go here
+    // methods go here:
 
     // hide carousel
     hideCarousel: function() {
@@ -156,10 +144,8 @@ $(document).ready(function(){
     // clear the display of Gifs
     clearTermsFromPage: function () {
       console.log("in userInterface.clearTermsFromPage");
-    //   $("#gif-div").empty();
       $("#myCarousel>ol").remove();
       $("#myCarousel>div").remove();
-
     },
 
 
@@ -172,18 +158,6 @@ $(document).ready(function(){
     // build drop down list
     buildDropDownList: function () {
       console.log("in userInterface.buildDropDownList");
-
-          //   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          //   <a class="dropdown-item active" data-value="cats" href="#">cats</a>
-          //   <a class="dropdown-item" data-value="anteaters" href="#">anteaters</a>
-          //   <a class="dropdown-item" data-value="dogX" href="#">dogs</a>
-          //   <a class="dropdown-item" data-value="cats omg" href="#">cats omg</a>
-          //   <a class="dropdown-item" data-value="deer" href="#">deer</a>
-          //   <a class="dropdown-item" data-value="fish" href="#">fish</a>
-          //   <a class="dropdown-item" data-value="lizard" href="#">lizard</a>
-          //   <a class="dropdown-item" data-value="panda"  href="#">panda</a>
-          //   <a class="dropdown-item" data-value="whales" href="#">whales</a>
-          // </div>
 
       // build drop down control items
 
@@ -209,27 +183,6 @@ $(document).ready(function(){
         console.log(response);
 
         var results = response.data;
-
-
-      // <div id="gif-div">
-      //   <ol class="carousel-indicators">
-      //     <li data-target="#myCarousel" data-slide-to="0"></li>
-      //     <li data-target="#myCarousel" data-slide-to="1"></li>
-      //     <li data-target="#myCarousel" data-slide-to="2"></li>
-      //   </ol>
-      //   <div class="carousel-inner">
-      //     <div class="carousel-item active">
-      //       <img src="assets/images/cat01.gif" class="d-block w-100" alt="...">
-      //     </div>
-      //     <div class="carousel-item">
-      //       <img src="assets/images/cat02.gif" class="d-block w-100" alt="...">
-      //     </div>
-      //     <div class="carousel-item">
-      //       <img src="assets/images/cat03.gif" class="d-block w-100" alt="...">
-      //     </div>
-      //   </div>
-      // </div>
-
         console.log("length is: ", results.length);
 
         //  *** taking out until time to resolve issue ***
@@ -241,20 +194,12 @@ $(document).ready(function(){
             //     // $("#gif-div").append('<div class="carousel-inner">');
 
         $("#myCarousel").prepend('<div class="carousel-inner">');
+
         //  *** taking out until time to resolve issue ***
         // $("#myCarousel").prepend(carouselOl);
 
-      
-
-        // build empty carousel inner div
-        // var carouselInner = $('<div class="carousel-inner">');
-        // var carouselInner = $('<div>');
-        // carouselInner.addClass('carousel-inner');
-        // console.log("inner: ", carouselInner);
-
         // append to the gif-div
- 
-       
+
         for (var i = 0; i < results.length; i++) {
           //  *** taking out until time to resolve issue ***
           // // build list items for carousel indicators  
@@ -287,7 +232,6 @@ $(document).ready(function(){
 
           // build img tag
           var img = $("<img>").attr("src",results[i].images.downsized.url);
-          // var img = $("<img>").attr("src",results[i].images.fixed_width.url);
           img.addClass('d-block w-100');
           img.attr("alt",results[i].title);
 
@@ -323,8 +267,6 @@ $(document).ready(function(){
     // save terms array in local storage
     saveTermsInStorage: function() {
       console.log("in gifTerms.saveTermsInStorage");
-      // console.log("terms to save in storage: ", arr);
-      // localStorage.setItem("terms",arr);
       console.log("terms to save in storage: ", this.gifTermArray);
       localStorage.setItem("terms",this.gifTermArray);
     },
@@ -351,19 +293,11 @@ $(document).ready(function(){
       this.gifTermArray.push(term);
       console.log("number of saved terms: ",gifTerms.gifTermArray.length);
       this.clearStorage("terms");
-      // look into moving gifTermArray into this object instead of global
-      // this.saveTermsInStorage(this.gifTermArray);
       this.saveTermsInStorage();
 
 
       var a = $('<a class="dropdown-item" data-value="' + term + '" href="#">' + term + '</a>');
       $(".dropdown-menu").append(a);
-
-      // userInterface.clearTermsFromDropDownList();
-      // userInterface.buildDropDownList();
-
-      // need to add it to the dropdown list also
-      // put code for drop down list right here
     },
 
     // need method to save the Active drop down item into local storage
@@ -390,8 +324,6 @@ $(document).ready(function(){
       console.log("in gifTerms.clearGifTermArray");
       this.gifTermArray.splice(0,this.gifTermArray.length);
     },
-
-
   };
 
   
@@ -399,19 +331,13 @@ $(document).ready(function(){
   //  START OF PROGRAM FLOW
   // ----------------------------------------------------------------------------
 
-  
-  // userInterface.clearTermsFromPage();
-  // userInterface.getTermsFromApi("omg cats");
-  // userInterface.showCarousel();
   userInterface.hideCarousel();
   gifTerms.getTermsFromStorage();
-
   
   console.log("gifTermsArray is now: ",gifTerms.gifTermArray)
   if (gifTerms.gifTermArray.length > 0) {
     userInterface.showCarousel();
     userInterface.buildDropDownList();
-    // $('.dropdown-item[data-value="' + gifTerms.gifTermArray[0] +'"]').addClass("active");
     
     var activeItem = gifTerms.getActiveDropDownItemFromStorage();
     if (activeItem !== ''){
@@ -423,10 +349,6 @@ $(document).ready(function(){
       $('.dropdown-item[data-value="' + gifTerms.gifTermArray[0] +'"]').addClass("active");
       userInterface.getTermsFromApi(gifTerms.gifTermArray[0]);
     };
- 
-    // $("#search-input").val('');
-    // gifTerms.clearStorage(active-item);
-    // gifTerms.saveActiveDropDownItemInStorage(search);
   }
   else {
     // no saved searchs so show instruction modal
@@ -434,43 +356,10 @@ $(document).ready(function(){
     $('#my-modal').modal('show');
   }
   
-  
-
-
-
-        // localStorageTerms.clearStorage();
-        // retrievedTerms = gifTerms.getTermsFromStorage();
-        // console.log("retrieved terms: ", retrievedTerms);
-        // need to take retrievedTerms and put it into array gifTermArray
-        // gifTerms.gifTermArray = retrievedTerms.split(',');
-
-
- 
-
-        // gifTerms.gifTermArray = gifTerms.getTermsFromStorage().split(',');
-
-        // gifTerms.saveTermsInStorage(gifTerms.gifTermArray);
-        // userInterface.hideCarousel();
-
-
-        // userInterface.showCarousel();
-
-
-  
   // ----------------------------------------------------------------------------
   // Events and timers
   // ----------------------------------------------------------------------------
  
- // get value of clicked drop down list
-  // $(".dropdown-item").on("click",function() {
-  //   console.log("in global.dropdown-item click event");
-  //   console.log("you pressed: " + $(this).data("value"));
-  //   var clickedText = $(this).text();
-  //   console.log("text is: ",clickedText); 
-  //   userInterface.clearTermsFromPage();
-  //   userInterface.getTermsFromApi(clickedText);
-  // });
-
   $(document).on("click", ".dropdown-item", function() {
     console.log("in global.dropdown-item click event");
     console.log("you pressed: " + $(this).data("value"));
@@ -526,83 +415,6 @@ $(document).ready(function(){
 
   
   });
-
-
-  // $('.dropdown-menu a').on('click', function() {
-  //   console.log("value is: ", $(this).val());
-  // });
-
-
-  // $(".dropdown-item").on("click", function(e) {
-  //   console.log("in dropdown-item.on.click");
-  //   console.log("CLICK: " + e.type);
-  //   console.log("CLICK: " + e.which);
-  //   console.log("CLICK: " + e.target);
-  //   var button = $(event.target).closest('dropdown-item');
-  //   console.log("You clicked on: ", button);
-  //   console.log("that was: ", button.innerText);
-  //   console.log("value is:  ", $(this).val());
-   
-    
-  // });
-
-  
-// //  start - restart button event
-//   $("#start-restart").on("click", function(event) {
-//     event.preventDefault();
-//     console.log("in start-restart.on.click");
-//     // so the button read Start after a restart
-//     // a true reset as if browser refreshed
-//     $("start-restart").text("Start");
-//     $(this).prop("disabled",true);
-
-//     $(".bg-danger").attr("style","width: 0%");
-//     $(".bg-success").attr("style","width: 0%");
-//     $("#inner-container").addClass("hide-container");
-//     $("#inner-container-2").removeClass("hide-container");
-//     gameStartUp();
-//     gameQuestions.resetPool(inlineQuestionData);
-//     showQuestion();
-//   });
-  
-  
-  
-//   //  next quiz button event
-//   $("#next-set").on("click", function() {
-//     console.log("in next-set.on.click");
-//     $(this).prop("disabled",true);
-//     $(".bg-danger").attr("style","width: 0%");
-//     $(".bg-success").attr("style","width: 0%");
-//     $(".bg-danger").text('');
-//     $(".bg-success").text('');
-
-//     $("#inner-container").addClass("hide-container");
-//     $("#inner-container-2").removeClass("hide-container");
-//     // get and reveil next qustion
-//     showQuestion();
-//   });
-  
-//   // answer button event
-//   //  cancel the question timer &  start the intermission timer
-//   $(".list-group-item-light").on("click", function(e) {
-//     console.log("in list-group-item-light.on.click");
-//     // console.log("CLICK: " + e.type);
-//     // console.log("CLICK: " + e.which);
-//     // console.log("CLICK: " + e.target);
-//     var button = $(event.target).closest('button');
-//     // console.log("You clicked on: ", button);
-//     // console.log("that was: ", button.innerText);
-//     // console.log("value is:  ", $(this).val());
-   
-//     // stop the question timer
-//     stopQuestionCountdown();
-//     // decrement questions remaining
-//     questionsRemainingInSet--;
-//     // show the answer - 2nd parameter is if timeOut occured, which it did not
-//     showAnswer(currentQuestionInPlay.isCorrect(+$(this).val()),false);
-//     startIntermissionCountdown(); 
-//   });
-  
 
 
 // closes the document.ready

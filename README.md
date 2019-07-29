@@ -13,7 +13,7 @@ A clear button allows all saved searches to be removed.
 The current Gif search is highlighted in the dropdown list and is remembered on page reload.
 
 There is a modal form with instructions that displays if the page finds no saved searches 
-in local storage.
+in local storage on page load.
 
 This page was created using HTML, CSS, Bootstrap, Javascript, JQuery, Bootstrap and the Giphy API.
 
@@ -25,7 +25,7 @@ Gif page:
 
 ![Gif-U-Break-page](assets/images/wireframe1b.png)
 
-Mobil - showing collapsable menu:
+Mobile - showing collapsable menu:
 
 ![Gif-U-Break-mobil](assets/images/wireframe-mobil.png)
 

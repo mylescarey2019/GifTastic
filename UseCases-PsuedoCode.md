@@ -10,7 +10,7 @@ The users can also add the the list of topics via a search box.
 Page will levage bootstrap and be responsive.
 Intent is to make the topics are selectable via a header bar dropdown box instead of a bank of buttons.
 Will try to have Gifs presented in carosel or gallery.
-If time permists will leverage local storage to perist the search topics entered by user.
+If time permits will leverage local storage to perist the search topics entered by user.
 
 
 ![preliminary wireframe drawing](assets/images/wireframe0.png)

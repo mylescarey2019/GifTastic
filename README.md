@@ -17,6 +17,10 @@ in local storage on page load.
 
 This page was created using HTML, CSS, Bootstrap, Javascript, JQuery, Bootstrap and the Giphy API.
 
+## Deployed Page:
+https://mylescarey2019.github.io/GifTastic/
+
+
 Instruction modal:
 
 ![Gif-U-Break-Instructions](assets/images/wireframe1.png)

@@ -3,22 +3,24 @@
 Gif Retrieval Web Page
 
 ## Description
- 
+
 This page retrieves Gif using the Gihpy API.  The user enters a search term such as 'cats'
-and 10 Gifs will be loaded into a carousel display.  
+and 10 Gifs will be loaded into a carousel display.  Search terms are saved in a dropdown list and local storage for device persistance.  A clear button allows all saved searches to be removed.
 
-Search terms are saved in a dropdown list and local storage for device persistance.
-A clear button allows all saved searches to be removed.
+The current Gif search is highlighted in the dropdown list and is remembered on page reload.  There is a modal form with instructions that displays if the page finds no saved searches in local storage on page load.
 
-The current Gif search is highlighted in the dropdown list and is remembered on page reload.
-
-There is a modal form with instructions that displays if the page finds no saved searches 
-in local storage on page load.
-
-This page was created using HTML, CSS, Bootstrap, Javascript, JQuery, Bootstrap and the Giphy API.
+This page was created using HTML, CSS, Bootstrap, Javascript, JQuery, Local Storage and the Giphy API.
 
 ## Deployed Page:
 https://mylescarey2019.github.io/GifTastic/
+
+## Use Example:
+
+![use-example](./assets/images/use-example.gif)
+
+
+
+## Screen Captures:
 
 
 Instruction modal:
@@ -62,7 +64,7 @@ Myles Carey
 mylescarey2019@gmail.com 
 
 ## Version History
- 
+
 * 0.1
     * Initial Release
 
